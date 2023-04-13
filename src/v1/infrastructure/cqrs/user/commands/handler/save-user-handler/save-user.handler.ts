@@ -1,18 +1,13 @@
-import { CommandHandler, ICommandHandler } from "@nestjs/cqrs";
+import { CommandHandler } from "@nestjs/cqrs";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { SaveUserCommand } from "../../impl/save-user.command/save-user.command";
 import { User } from "src/v1/infrastructure/persistence/typeorm/cqrs/user/user";
+import { ISaveHandler } from "src/v1/business/domain/cqrs/commands/handler/save.handler.interface";
+import { SaveUserCommand } from "../../request-model/save-user.command/save-user.command";
  
 @CommandHandler(SaveUserCommand)
-export class SaveUserHandler implements ICommandHandler<SaveUserCommand> {
-    constructor(
-        @InjectRepository(User) private userRepo: Repository<User>,
-        ) {}
-
-    async execute(command: SaveUserCommand) {
-        var user = new User();        
-        user.name = command.name;
-        await this.userRepo.insert(user);
+export class SaveUserHandler extends ISaveHandler<SaveUserCommand,User> {
+    constructor(@InjectRepository(User) userRepo: Repository<User>,entity: User){
+        super(userRepo,entity);
     }
 }

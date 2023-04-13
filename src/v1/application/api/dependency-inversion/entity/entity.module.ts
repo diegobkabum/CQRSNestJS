@@ -8,12 +8,10 @@ import { UserController } from '../../controller/user/user.controller';
 
 
 const features  = [User];
-const providers = [GetUsersHandler,SaveUserHandler];
+const providers = [GetUsersHandler,SaveUserHandler,User];
 @Module({
     imports:[TypeOrmModule.forFeature([...features]),CqrsModule],
-    providers:[
-        ...providers
-    ],
+    providers:[...providers],
     controllers: [UserController]
 })
 export class EntityModule {}
