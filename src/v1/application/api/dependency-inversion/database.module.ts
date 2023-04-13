@@ -1,6 +1,5 @@
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
-import { User } from 'src/v1/infrastructure/persistence/typeorm/cqrs/user/user';
  
 @Module({
   imports: [
@@ -11,7 +10,7 @@ import { User } from 'src/v1/infrastructure/persistence/typeorm/cqrs/user/user';
       username: 'root',
       password:'S@ntos123',
       database:'cqrs',
-      entities:[User],
+      entities:[__dirname + '/../../../**/*{.ts,.js}'],
       synchronize: true,
     })
   ]
