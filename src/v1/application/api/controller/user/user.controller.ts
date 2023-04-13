@@ -1,7 +1,7 @@
-import { Body, Controller, Get, HttpCode, Inject, Post, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, Inject, Post, Query, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { SaveUserCommand } from 'src/v1/infrastructure/cqrs/user/commands/impl/save-user.command/save-user.command';
-import { GetUsersQuery } from 'src/v1/infrastructure/cqrs/user/queries/impl/get-users.query/get-users.query';
+import { SaveUserCommand } from 'src/v1/infrastructure/cqrs/user/commands/implementation/save-user.command/save-user.command';
+import { GetUsersQuery } from 'src/v1/infrastructure/cqrs/user/queries/implementation/get-users.query/get-users.query';
 import { CreateUserCommandToken, GetUserQueryBusToken } from '../../dependency-inversion/token/v1.tokens';
 
 @Controller('user')
@@ -13,7 +13,17 @@ export class UserController {
     @Get('all')
     @HttpCode(200)
     async getAll() {
-      return await this.queryBus.execute(new GetUsersQuery());
+        const getUsersQuery = new GetUsersQuery();
+        getUsersQuery.queryExecute = getUsersQuery.queryAllUsers;
+        return await this.queryBus.execute(getUsersQuery);
+    }
+
+    @Get('id')
+    @HttpCode(200)
+    async getId(@Query("id") id: number) {
+        const getUsersQuery = new GetUsersQuery();
+        getUsersQuery.queryExecute = `${getUsersQuery.queryUserById} ${id}`;
+        return await this.queryBus.execute(getUsersQuery);
     }
 
     @Post('add')
