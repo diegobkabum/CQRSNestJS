@@ -1,8 +1,7 @@
 import { Body, Controller, Get, HttpCode, Inject, Post, Query, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { SaveUserCommand } from 'src/v1/infrastructure/cqrs/user/commands/implementation/save-user.command/save-user.command';
-import { GetUsersQuery } from 'src/v1/infrastructure/cqrs/user/queries/implementation/get-users.query/get-users.query';
-import { CreateUserCommandToken, GetUserQueryBusToken } from '../../dependency-inversion/token/v1.tokens';
+import { SaveUserCommand } from 'src/v1/infrastructure/cqrs/user/commands/request-model/save-user.command/save-user.command';
+import { GetUsersQuery } from 'src/v1/infrastructure/cqrs/user/queries/request-model/get-users.query/get-users.query';
 
 @Controller('user')
 export class UserController {
