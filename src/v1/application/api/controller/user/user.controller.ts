@@ -1,8 +1,8 @@
-import { Body, Controller, Get, HttpCode, Inject, Post, Query, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, Inject, Post, Query, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { SaveUserCommand } from 'src/v1/infrastructure/cqrs/user/commands/request-model/save-user.command/save-user.command';
-import { GetUsersQuery } from 'src/v1/infrastructure/cqrs/user/queries/request-model/get-users.query/get-users.query';
-
+import { DeleteUserCommand } from 'src/v1/infrastructure/cqrs/user/commands/request-model/user/delete-user.command';
+import { SaveUserCommand } from 'src/v1/infrastructure/cqrs/user/commands/request-model/user/save-user.command';
+import { GetUsersQuery } from 'src/v1/infrastructure/cqrs/user/queries/request-model/get-users/get-users.request-model';
 @Controller('user')
 export class UserController {
     constructor(        
@@ -28,7 +28,14 @@ export class UserController {
     @Post('add')
     @HttpCode(201)
     @UsePipes(new ValidationPipe({ transform: true }))
-    async createEmployee(@Body() newUser: SaveUserCommand) {
+    async createUser(@Body() newUser: SaveUserCommand) {
       return await this.commandBus.execute(newUser);
+    }
+
+    @Delete('delete')
+    @HttpCode(200)
+    @UsePipes(new ValidationPipe({ transform: true }))
+    async deleteUser(@Body() deleteUser: DeleteUserCommand) {   
+        await this.commandBus.execute(deleteUser);        
     }
 }
