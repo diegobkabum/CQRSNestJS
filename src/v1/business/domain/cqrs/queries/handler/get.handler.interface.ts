@@ -13,9 +13,8 @@ export class IGetHandler<T,E> implements ICommandHandler<T> {
         this.entity = entity;
     }
 
-    async execute(query: T): Promise<E[]> {        
-        return (query["queryExecute"]) ?  await this.repo.query(query["queryExecute"].toString())
-                                :  this.entity;
-        
+    async execute(query: T): Promise<E[] | E> {    
+        const id = Number(query["id"]); 
+        return id ?  await this.repo.findOneById(+id) :  await this.repo.find();                
     }
 }

@@ -1,4 +1,4 @@
-import { User } from "src/v1/infrastructure/persistence/typeorm/cqrs/user/user";
+import { User } from "src/v1/infrastructure/persistence/typeorm/cqrs/user/user.typeorm";
 
 export class SavePedidoCommand {
     id: number;

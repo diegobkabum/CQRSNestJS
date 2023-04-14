@@ -1,5 +1,5 @@
 import { Column, Entity, ManyToOne,PrimaryGeneratedColumn, TableForeignKey } from 'typeorm';
-import { User } from '../user/user';
+import { User } from '../user/user.typeorm';
  
 @Entity({name:'pedido'})
 export class Pedido {
@@ -8,7 +8,7 @@ export class Pedido {
  
   @Column({name:'data_pedido'})
   order_date: string;
-
-  @ManyToOne(type => User, user => user.id) 
-  user_id: User;
+  
+  @ManyToOne(() => User, (user) => user.id)
+  user: User;
 }
