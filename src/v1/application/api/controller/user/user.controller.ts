@@ -1,8 +1,8 @@
 import { Body, Controller, Delete, Get, HttpCode, Inject, Post, Query, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { DeleteUserCommand } from 'src/v1/infrastructure/cqrs/user/commands/request-model/user/delete-user.command';
-import { SaveUserCommand } from 'src/v1/infrastructure/cqrs/user/commands/request-model/user/save-user.command';
-import { GetUsersQuery } from 'src/v1/infrastructure/cqrs/user/queries/request-model/get-users/get-users.request-model';
+import { DeleteUserCommand } from 'src/v1/infrastructure/cqrs/user/commands/impl/user/delete-user.command';
+import { SaveUserCommand } from 'src/v1/infrastructure/cqrs/user/commands/impl/user/save-user.command';
+import { GetUsersQuery } from 'src/v1/infrastructure/cqrs/user/queries/impl/get-users/get-users';
 @Controller('user')
 export class UserController {
     constructor(        
@@ -21,7 +21,8 @@ export class UserController {
     @HttpCode(200)
     async getId(@Query("id") id: number) {
         const getUsersQuery = new GetUsersQuery();
-        getUsersQuery.queryExecute = `${getUsersQuery.queryUserById} ${id}`;
+        getUsersQuery.id = id;
+        
         return await this.queryBus.execute(getUsersQuery);
     }
 
