@@ -9,7 +9,7 @@ export class UserController {
         private readonly queryBus: QueryBus,        
         private readonly commandBus:CommandBus) {}
 
-    @Get('all')
+    @Get()
     @HttpCode(200)
     async getAll() {
         const getUsersQuery = new GetUsersQuery();        
@@ -25,14 +25,14 @@ export class UserController {
         return await this.queryBus.execute(getUsersQuery);
     }
 
-    @Post('add')
+    @Post()
     @HttpCode(201)
     @UsePipes(new ValidationPipe({ transform: true }))
     async createUser(@Body() newUser: SaveUserCommand) {
       return await this.commandBus.execute(newUser);
     }
 
-    @Delete('delete')
+    @Delete()
     @HttpCode(200)
     @UsePipes(new ValidationPipe({ transform: true }))
     async deleteUser(@Body() deleteUser: DeleteUserCommand) {   
