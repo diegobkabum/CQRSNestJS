@@ -1,4 +1,4 @@
-export interface IGetQuery {
-    id: number;
-    queryExecute: string;  
+export abstract class IGetQuery {
+    public id: number;
+    public queryExecute: string;  
 }

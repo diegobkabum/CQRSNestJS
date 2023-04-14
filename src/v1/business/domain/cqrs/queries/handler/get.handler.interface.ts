@@ -1,5 +1,6 @@
 import { ICommandHandler } from "@nestjs/cqrs";
 import { Repository } from "typeorm";
+import { IGetQuery } from "../impl/get.interface";
 
 export class IGetHandler<T,E> implements ICommandHandler<T> {
     protected readonly repo: Repository<E>   
@@ -14,7 +15,12 @@ export class IGetHandler<T,E> implements ICommandHandler<T> {
     }
 
     async execute(query: T): Promise<E[] | E> {    
-        const id = Number(query["id"]); 
-        return id ?  await this.repo.findOneById(+id) :  await this.repo.find();                
+        const queryHandler = query as IGetQuery;     
+        const id = Number(queryHandler.id);         
+        this.entity.id = id;
+
+        if (queryHandler.queryExecute) return await this.repo.query(queryHandler.queryExecute);
+
+        return this.entity.id ? await this.repo.findOne({where:this.entity.id}) : await this.repo.find();                
     }
 }

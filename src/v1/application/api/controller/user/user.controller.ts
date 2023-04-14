@@ -12,8 +12,7 @@ export class UserController {
     @Get('all')
     @HttpCode(200)
     async getAll() {
-        const getUsersQuery = new GetUsersQuery();
-        getUsersQuery.queryExecute = getUsersQuery.queryAllUsers;
+        const getUsersQuery = new GetUsersQuery();        
         return await this.queryBus.execute(getUsersQuery);
     }
 

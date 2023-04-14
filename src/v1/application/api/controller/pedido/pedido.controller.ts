@@ -13,8 +13,7 @@ export class PedidoController {
     @Get('all')
     @HttpCode(200)
     async getAll() {
-        const getPedidosQuery = new GetPedidosQuery();
-        getPedidosQuery.queryExecute = getPedidosQuery.queryAllUsers;
+        const getPedidosQuery = new GetPedidosQuery();        
         return await this.queryBus.execute(getPedidosQuery);
     }
 

@@ -10,13 +10,16 @@ import { Pedido } from 'src/v1/infrastructure/persistence/typeorm/cqrs/pedido/pe
 import { PedidoController } from '../../controller/pedido/pedido.controller';
 import { SavePedidoHandler } from 'src/v1/infrastructure/cqrs/user/commands/handler/pedido/save-pedido.handler';
 import { User } from 'src/v1/infrastructure/persistence/typeorm/cqrs/user/user.typeorm';
+import { GetExecuteHandler } from 'src/v1/infrastructure/cqrs/user/queries/handler/get-execute-query/get-execute-query';
+import { ExecuteQuery } from 'src/v1/infrastructure/persistence/typeorm/cqrs/execute.typeorm';
+import { QueryExecuteController } from '../../controller/execute-query/execute-query.controller';
 
 
-const typeOrms  = [User,Pedido];
-const providers = [GetUsersHandler,SaveUserHandler,DeleteUserHandler,GetPedidosHandler,SavePedidoHandler];
+const typeOrms  = [User,Pedido,ExecuteQuery];
+const providers = [GetUsersHandler,SaveUserHandler,DeleteUserHandler,GetPedidosHandler,SavePedidoHandler,GetExecuteHandler];
 @Module({
     imports:[TypeOrmModule.forFeature([...typeOrms]),CqrsModule],
     providers:[...providers,...typeOrms],
-    controllers: [UserController,PedidoController]
+    controllers: [UserController,PedidoController,QueryExecuteController]
 })
 export class EntityModule {}
