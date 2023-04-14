@@ -10,7 +10,7 @@ export class PedidoController {
         private readonly queryBus: QueryBus,        
         private readonly commandBus:CommandBus) {}
 
-    @Get('all')
+    @Get()
     @HttpCode(200)
     async getAll() {
         const getPedidosQuery = new GetPedidosQuery();        
@@ -25,7 +25,7 @@ export class PedidoController {
         return await this.queryBus.execute(getPedidosQuery);
     }
 
-    @Post('add')
+    @Post()
     @HttpCode(201)
     @UsePipes(new ValidationPipe({ transform: true }))
     async createPedido(@Body() newPedido: SavePedidoCommand) {

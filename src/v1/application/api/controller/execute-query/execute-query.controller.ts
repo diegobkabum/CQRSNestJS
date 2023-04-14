@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, HttpCode, Inject, Post, Query, UsePipes,
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { GetExecuteQuery } from 'src/v1/infrastructure/cqrs/user/queries/impl/get-execute-query/get-execute-query';
 
-@Controller('query')
+@Controller('execute')
 export class QueryExecuteController {
     constructor(        
         private readonly queryBus: QueryBus) {}
